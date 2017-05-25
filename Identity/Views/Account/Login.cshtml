@@ -1,0 +1,32 @@
+﻿@model Identity.ViewModels.UserLoginModel
+@{ 
+    ViewBag.Title = "Giriş Yap";
+}
+        <h4 class="form-signin-heading">Lütfen giriş yapınız</h4>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.Label("E-Mail", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-5">@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })</div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Parola", htmlAttributes: new { @class = "control-label col-md-2" })
+
+                    <div class="col-md-5"><input type="password" name="Password" id="Password" class="form-control" /></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-5">
+                        <input type="submit" value="Giriş Yap" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        }
+        <hr />
+        <div>
+            @Html.RouteLink("Anasayfaya geri dön","Home")
+        </div>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>

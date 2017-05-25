@@ -1,0 +1,41 @@
+﻿@using Identity.Infrastructure
+@model IEnumerable<UserApp>
+@{
+    ViewBag.Title = "Rol yönetimi";
+}
+<p>
+    @Html.ActionLink("Yeni rol", "Create", "Role", new { @class = "btn btn-primary" })
+</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Kullanıcı Adı</th>
+            <th>Kullanıcı Email</th>
+            @foreach (var item in Helpers.GetRoles())
+            {
+                <th>@item.Name</th>
+            }
+            <th>Güncelle</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>@item.UserName</td>
+        <td>@item.Email</td>
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("userId",@item.Id)
+            foreach (var rol in Helpers.GetRoles())
+            {
+            <td><input type="checkbox" class="checkbox checkbox-inline" value="@rol.Name" name="RoleNames" id="RoleNames" checked="@item.Roles.Any(a => a.RoleId == rol.Id)"/></td>
+            }
+        <td><input type="submit" value="Güncelle"class="btn btn-success" /></td>
+        }
+    </tr>
+    }
+    </tbody>
+</table>
+<div>
+    @Html.RouteLink("Rol listesine geri dön", "roller")
+</div>

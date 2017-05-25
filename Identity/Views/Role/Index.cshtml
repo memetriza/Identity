@@ -1,0 +1,33 @@
+﻿@using Identity.Infrastructure
+@model IEnumerable<Identity.Infrastructure.RoleApp>
+
+@{
+    ViewBag.Title = "Roller";
+}
+<h2>Rol Yönetimi</h2>
+<p>
+    @Html.ActionLink("Yeni rol", "Create","Role",new { @class="btn btn-primary"})
+    @Html.ActionLink("Rol ata", "Yonetim", "Role", new { @class = "btn btn-success" })
+</p>
+<table class="table">
+    <tr>
+        <th>Rol</th>    
+        <th>Kullanıcılar</th>  
+        <th>İşlem</th> 
+    </tr>
+@foreach (var item in Model) {
+    <tr>
+        <td>@Html.DisplayFor(modelItem=>item.Name)</td>    
+        <td>
+            @if (item.Users.Any())
+            {
+                <text>@string.Join(",", item.Users.Select(a => Helpers.GetUserName(a.UserId)).ToArray());</text>
+            }else
+            {
+                <text>Role ait kullanıcı bulunamadı</text>
+            }
+        </td>
+        <td><a href="@Url.Action("Delete",new { item.Id } )" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i>Sil</a></td>       
+    </tr>
+}
+</table>

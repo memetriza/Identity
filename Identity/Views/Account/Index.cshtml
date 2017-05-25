@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Identity.Infrastructure.UserApp>
+@{
+    ViewBag.Title = "Üyeler";
+}
+<p>
+    @Html.ActionLink("Yeni Üye Ekle", "Create", "Account",new { @class = "btn btn-primary" })
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Kullanıcı Adı</th>
+            <th>Adı</th>
+            <th>Soyadı</th>
+            <th>E-Mail</th>
+            <th>Uyelik</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (Model.Any())
+    {
+
+        foreach (var item in Model)
+        {
+            var cls = "";
+            if (!item.UyeMi)
+            {
+                cls = "danger";
+            }
+            <tr class="@cls">
+                <td>@item.UserName</td>
+                <td>@item.Name</td>
+                <td>@item.Surname</td>
+                <td>@item.Email</td>
+                @if (item.UyeMi)
+                {
+                    <td>Aktif</td>
+                }
+                else
+                {
+                    <td>Pasif</td>
+                }
+                <td>
+                    <div class="btn-group">
+                        <a href="@Url.Action("Edit",new { item.Id } )" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Düzenle</a>
+                        <a href="@Url.Action("Delete",new { item.Id } )" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i>Sil</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <th colspan="4">Kayıtlı Üye Bulunmamaktadır.</th>
+        </tr>
+    }
+</tbody>
+</table>
